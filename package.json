@@ -1,0 +1,12 @@
+{
+  "name": "upi-scraper",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "scrape": "node server.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8"
+  }
+}

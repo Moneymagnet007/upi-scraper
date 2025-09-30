@@ -1,0 +1,36 @@
+name: UPI Scraper
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: "Target URL to scrape"
+        required: true
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Puppeteer scraper
+        run: node server.js ${{ github.event.inputs.target_url }}
+
+      - name: Upload info.json to hosting (FTP)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.flipkartoffersday.com
+          username: github@flipkartoffersday.com
+          password: Flipkart789@
+          local-dir: ./sale/data/
+          server-dir: /public_html/bigsle/sale/data/
